@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A cozy little online shop for stationery, desk essentials and tiny gadgets.">
+  <title>Shop — cozy.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+
+<body>
+  <div class="soft-orb orb-one"></div>
+  <div class="soft-orb orb-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Home">
+      <span data-store-name>cozy.</span><i>♡</i>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a class="active" href="shop.html">Shop</a>
+      <a href="index.html#collections">Collections</a>
+      <a href="index.html#desk">Desk</a>
+      <a href="index.html#about">About</a>
+    </nav>
+
+    <button class="bag-button" id="shopBag" type="button" aria-label="Shopping bag">
+      <span>♡</span>
+      Bag
+      <b id="bagCount">0</b>
+    </button>
+  </header>
+
+  <main>
+    <section class="shop-hero">
+      <div>
+        <p class="eyebrow">a little something for your space ✦</p>
+        <h1>shop the<br><span>cozy little things.</span></h1>
+        <p class="hero-copy">
+          Stationery, desk treasures and tiny gadgets chosen to make
+          ordinary days feel a little softer.
+        </p>
+      </div>
+
+      <div class="hero-doodle" aria-hidden="true">
+        <span>✦</span>
+        <strong>take your time ♡</strong>
+        <span>☁</span>
+      </div>
+    </section>
+
+    <section class="shop-controls">
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="shopSearch" type="search" placeholder="Search your little things..." autocomplete="off">
+      </div>
+
+      <button class="mobile-filter-button" id="mobileFilterButton" type="button">
+        ☷ Filters
+      </button>
+
+      <div class="sort-wrap">
+        <label for="sortProducts">Sort</label>
+        <select id="sortProducts">
+          <option value="featured">Featured</option>
+          <option value="new">Newest</option>
+          <option value="price-low">Price: low to high</option>
+          <option value="price-high">Price: high to low</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="shop-layout">
+      <div class="filter-backdrop" id="filterBackdrop"></div>
+
+      <aside class="filter-panel" id="filterPanel">
+        <div class="filter-mobile-head">
+          <strong>Browse</strong>
+          <button id="closeFilters" type="button" aria-label="Close filters">×</button>
+        </div>
+
+        <div class="filter-group">
+          <p class="filter-title">Shop by category</p>
+
+          <button class="category-button active" data-category="all" aria-pressed="true">
+            <span>✦</span> All little things
+          </button>
+          <button class="category-button" data-category="stationery" aria-pressed="false">
+            <span>✎</span> Stationery
+          </button>
+          <button class="category-button" data-category="desk" aria-pressed="false">
+            <span>☕</span> Desk
+          </button>
+          <button class="category-button" data-category="gadgets" aria-pressed="false">
+            <span>⌁</span> Gadgets
+          </button>
+          <button class="category-button" data-category="accessories" aria-pressed="false">
+            <span>♡</span> Accessories
+          </button>
+        </div>
+
+        <div class="filter-note">
+          <span>☁</span>
+          <p>little things,<br><b>big cozy energy.</b></p>
+        </div>
+
+        <button class="clear-button" id="clearFilters" type="button">Clear filters</button>
+      </aside>
+
+      <section class="products-area" aria-label="Products">
+        <div class="products-heading">
+          <div>
+            <p class="eyebrow">freshly picked</p>
+            <h2>little things you’ll love.</h2>
+          </div>
+          <span id="resultCount">0 little things</span>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <div>☁️</div>
+          <h2>Nothing here yet...</h2>
+          <p>Try another search or clear the filters.</p>
+          <button class="clear-button" type="button" onclick="document.querySelector('#clearFilters').click()">Show everything</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a class="brand footer-brand" href="index.html"><span data-store-name>cozy.</span><i>♡</i></a>
+      <p>small things for softer days.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <p class="copyright">© <span id="year"></span> <span data-store-name>cozy.</span> · made with ♡</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>
