@@ -1,628 +1,241 @@
 /* =========================================================
-   COZY STORE — PRODUCT DETAILS
+   COZY STORE — PRODUCT DATA
    ========================================================= */
 
-const CART_KEY = "cozy_store_cart_v3";
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const productId =
-  params.get("id");
-
-const product =
-  getProduct(productId);
+const STORE_CONFIG = {
+  name: "cozy.",
+  currency: "LKR",
+  currencySymbol: "Rs."
+};
 
 
 /* =========================================================
-   ELEMENTS
+   PRODUCTS
    ========================================================= */
 
-const productName =
-  document.querySelector("#productName");
+const PRODUCTS = [
 
-const productCategory =
-  document.querySelector("#productCategory");
+  {
+    id: "cloudy-notes",
+    name: "Cloudy Notes Notebook",
+    price: 850,
+    category: "stationery",
+    mood: "soft-cozy",
+    badge: "Bestseller",
+    emoji: "📓",
 
-const productPrice =
-  document.querySelector("#productPrice");
+    description:
+      "A soft everyday notebook for plans, thoughts, study notes and little ideas.",
 
-const productDescription =
-  document.querySelector("#productDescription");
+    details:
+      "Made for everyday thoughts, study sessions and little plans. The Cloudy Notes Notebook brings a soft cozy feeling to your desk while giving you plenty of space to write.",
 
-const productLongDescription =
-  document.querySelector("#productLongDescription");
+    colors: [
+      "#dff3f7",
+      "#faf8f1"
+    ],
 
-const productEmoji =
-  document.querySelector("#productEmoji");
-
-const productVisual =
-  document.querySelector("#productVisual");
-
-const productBadge =
-  document.querySelector("#productBadge");
-
-const stockText =
-  document.querySelector("#stockText");
-
-const quantityElement =
-  document.querySelector("#quantity");
-
-const plusButton =
-  document.querySelector("#plusButton");
-
-const minusButton =
-  document.querySelector("#minusButton");
-
-const addToCartButton =
-  document.querySelector("#addToCartButton");
-
-const wishlistButton =
-  document.querySelector("#wishlistButton");
-
-const breadcrumbName =
-  document.querySelector("#breadcrumbName");
-
-const relatedProducts =
-  document.querySelector("#relatedProducts");
-
-const bagCount =
-  document.querySelector("#bagCount");
-
-const toast =
-  document.querySelector("#toast");
+    stock: 18,
+    featured: true
+  },
 
 
-let quantity = 1;
+  {
+    id: "pastel-pens",
+    name: "Pastel Pen Set",
+    price: 650,
+    category: "stationery",
+    mood: "soft-cozy",
+    badge: "New",
+    emoji: "🖊️",
+
+    description:
+      "A dreamy set of smooth pastel pens made for notes that feel a little happier.",
+
+    details:
+      "A cute pastel pen collection for school, university, journaling and everyday notes. Smooth, lightweight and easy to carry.",
+
+    colors: [
+      "#f8e1e5",
+      "#dcebd5"
+    ],
+
+    stock: 24,
+    featured: true
+  },
+
+
+  {
+    id: "matcha-cup",
+    name: "Matcha Desk Cup",
+    price: 1250,
+    category: "desk",
+    mood: "matcha",
+    badge: "",
+    emoji: "🍵",
+
+    description:
+      "A cute desk cup for pens, brushes and all the tiny things that wander around your workspace.",
+
+    details:
+      "Keep your desk organized with this simple little cup. Perfect for pens, pencils, brushes and other everyday desk accessories.",
+
+    colors: [
+      "#dcebd5",
+      "#faf8f1"
+    ],
+
+    stock: 11,
+    featured: true
+  },
+
+
+  {
+    id: "tiny-lamp",
+    name: "Tiny Cozy Lamp",
+    price: 2400,
+    category: "gadgets",
+    mood: "night",
+    badge: "Popular",
+    emoji: "💡",
+
+    description:
+      "A tiny warm desk light for late-night study sessions and cozy corners.",
+
+    details:
+      "A compact desk lamp designed for soft evening lighting. Great for study desks, bedside tables and cozy reading corners.",
+
+    colors: [
+      "#fff0cf",
+      "#f8e1e5"
+    ],
+
+    stock: 7,
+    featured: true
+  },
+
+
+  {
+    id: "cloud-stickers",
+    name: "Cloudy Sticker Sheet",
+    price: 450,
+    category: "stationery",
+    mood: "soft-cozy",
+    badge: "Cute pick",
+    emoji: "☁️",
+
+    description:
+      "Tiny clouds, stars and dreamy shapes for journals, laptops and planners.",
+
+    details:
+      "Decorate your notebooks, planners, phone cases and laptop with these tiny dreamy stickers.",
+
+    colors: [
+      "#dff3f7",
+      "#ffffff"
+    ],
+
+    stock: 35,
+    featured: false
+  },
+
+
+  {
+    id: "cable-buddy",
+    name: "Mini Cable Buddy",
+    price: 550,
+    category: "accessories",
+    mood: "matcha",
+    badge: "",
+    emoji: "🔌",
+
+    description:
+      "A tiny desk accessory that keeps your charging cable from escaping.",
+
+    details:
+      "A small and useful accessory for keeping charging cables neat and close to your desk.",
+
+    colors: [
+      "#dcebd5",
+      "#dff3f7"
+    ],
+
+    stock: 21,
+    featured: false
+  },
+
+
+  {
+    id: "study-timer",
+    name: "Mini Study Timer",
+    price: 1850,
+    category: "gadgets",
+    mood: "night",
+    badge: "Study",
+    emoji: "⏱️",
+
+    description:
+      "A compact timer for focused study blocks, Pomodoro sessions and mindful breaks.",
+
+    details:
+      "Keep your study sessions focused with a simple desk timer. Ideal for Pomodoro sessions and productivity routines.",
+
+    colors: [
+      "#faf8f1",
+      "#dff3f7"
+    ],
+
+    stock: 9,
+    featured: false
+  },
+
+
+  {
+    id: "cozy-pouch",
+    name: "Soft Desk Pouch",
+    price: 1450,
+    category: "accessories",
+    mood: "soft-cozy",
+    badge: "",
+    emoji: "👜",
+
+    description:
+      "A soft little pouch for pens, chargers, earbuds and everyday desk essentials.",
+
+    details:
+      "A compact everyday pouch for keeping your small stationery, charging cables, earbuds and other accessories together.",
+
+    colors: [
+      "#f8e1e5",
+      "#faf8f1"
+    ],
+
+    stock: 15,
+    featured: false
+  }
+
+];
 
 
 /* =========================================================
-   CART
+   PRICE FORMAT
    ========================================================= */
 
-function loadCart() {
+function formatPrice(value) {
 
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(CART_KEY)
-    ) || [];
-
-  } catch {
-
-    return [];
-
-  }
-
-}
-
-
-function saveCart(cart) {
-
-  localStorage.setItem(
-    CART_KEY,
-    JSON.stringify(cart)
-  );
-
-}
-
-
-function updateBagCount() {
-
-  const cart =
-    loadCart();
-
-  const count =
-    cart.reduce(
-      (total, item) =>
-        total + item.quantity,
-      0
-    );
-
-  if (bagCount) {
-
-    bagCount.textContent =
-      count;
-
-  }
+  return `${STORE_CONFIG.currencySymbol} ${Number(value).toLocaleString("en-LK")}`;
 
 }
 
 
 /* =========================================================
-   TOAST
+   FIND PRODUCT
    ========================================================= */
 
-function showToast(message) {
+function getProduct(id) {
 
-  if (!toast) return;
-
-  toast.textContent =
-    message;
-
-  toast.classList.add(
-    "show"
+  return PRODUCTS.find(
+    product => product.id === id
   );
-
-  clearTimeout(
-    window.cozyToastTimer
-  );
-
-  window.cozyToastTimer =
-    setTimeout(() => {
-
-      toast.classList.remove(
-        "show"
-      );
-
-    }, 2400);
 
 }
-
-
-/* =========================================================
-   INVALID PRODUCT
-   ========================================================= */
-
-if (!product) {
-
-  document.title =
-    "Product not found — cozy.";
-
-  document.querySelector(
-    "#productPage"
-  ).innerHTML = `
-
-    <div style="
-      grid-column:1/-1;
-      text-align:center;
-      padding:80px 20px;
-    ">
-
-      <div style="
-        font-size:4rem;
-      ">
-        ☁️
-      </div>
-
-      <h1 style="
-        margin-top:15px;
-        font-family:Fredoka,sans-serif;
-      ">
-        Hmm... this little thing
-        wandered away.
-      </h1>
-
-      <p style="
-        margin-top:10px;
-        color:#788386;
-      ">
-        We couldn't find that product.
-      </p>
-
-      <a
-        href="shop.html"
-        style="
-          display:inline-block;
-          margin-top:20px;
-          padding:13px 20px;
-          border-radius:999px;
-          background:#263c3b;
-          color:white;
-          font-weight:700;
-          font-size:.8rem;
-        "
-      >
-        Back to shop
-      </a>
-
-    </div>
-  `;
-
-} else {
-
-
-  /* =======================================================
-     FILL PRODUCT
-     ======================================================= */
-
-  document.title =
-    `${product.name} — ${STORE_CONFIG.name}`;
-
-
-  if (productName) {
-
-    productName.textContent =
-      product.name;
-
-  }
-
-
-  if (productCategory) {
-
-    productCategory.textContent =
-      product.category;
-
-  }
-
-
-  if (productPrice) {
-
-    productPrice.textContent =
-      formatPrice(
-        product.price
-      );
-
-  }
-
-
-  if (productDescription) {
-
-    productDescription.textContent =
-      product.description;
-
-  }
-
-
-  if (productLongDescription) {
-
-    productLongDescription.textContent =
-      product.details;
-
-  }
-
-
-  if (productEmoji) {
-
-    productEmoji.textContent =
-      product.emoji;
-
-  }
-
-
-  if (productBadge) {
-
-    productBadge.textContent =
-      product.badge || "";
-
-  }
-
-
-  if (breadcrumbName) {
-
-    breadcrumbName.textContent =
-      product.name;
-
-  }
-
-
-  if (productVisual) {
-
-    productVisual.style.setProperty(
-      "--tone-a",
-      product.colors[0]
-    );
-
-    productVisual.style.setProperty(
-      "--tone-b",
-      product.colors[1]
-    );
-
-    productVisual.style.background =
-      `linear-gradient(
-        135deg,
-        ${product.colors[0]},
-        ${product.colors[1]}
-      )`;
-
-  }
-
-
-  /* =======================================================
-     STOCK
-     ======================================================= */
-
-  if (stockText) {
-
-    if (product.stock > 0) {
-
-      stockText.textContent =
-        `${product.stock} available`;
-
-    } else {
-
-      stockText.textContent =
-        "Currently out of stock";
-
-      addToCartButton.disabled =
-        true;
-
-      addToCartButton.textContent =
-        "Out of stock";
-
-    }
-
-  }
-
-
-  /* =======================================================
-     QUANTITY
-     ======================================================= */
-
-  function updateQuantity() {
-
-    quantityElement.textContent =
-      quantity;
-
-  }
-
-
-  plusButton?.addEventListener(
-    "click",
-    () => {
-
-      if (
-        quantity <
-        product.stock
-      ) {
-
-        quantity += 1;
-
-        updateQuantity();
-
-      } else {
-
-        showToast(
-          "That’s all we have in stock ♡"
-        );
-
-      }
-
-    }
-  );
-
-
-  minusButton?.addEventListener(
-    "click",
-    () => {
-
-      if (quantity > 1) {
-
-        quantity -= 1;
-
-        updateQuantity();
-
-      }
-
-    }
-  );
-
-
-  /* =======================================================
-     ADD TO CART
-     ======================================================= */
-
-  addToCartButton?.addEventListener(
-    "click",
-    () => {
-
-      if (
-        product.stock <= 0
-      ) {
-
-        return;
-
-      }
-
-
-      const cart =
-        loadCart();
-
-      const existing =
-        cart.find(
-          item =>
-            item.id ===
-            product.id
-        );
-
-
-      if (existing) {
-
-        const newQuantity =
-          existing.quantity +
-          quantity;
-
-        if (
-          newQuantity >
-          product.stock
-        ) {
-
-          showToast(
-            "You reached the available stock ♡"
-          );
-
-          return;
-
-        }
-
-        existing.quantity =
-          newQuantity;
-
-      } else {
-
-        cart.push({
-
-          id: product.id,
-
-          quantity: quantity
-
-        });
-
-      }
-
-
-      saveCart(cart);
-
-      updateBagCount();
-
-
-      addToCartButton.classList.add(
-        "added"
-      );
-
-      addToCartButton.innerHTML =
-        "Added to your bag ✓";
-
-
-      showToast(
-        `${product.name} added to your cozy bag ✨`
-      );
-
-
-      setTimeout(() => {
-
-        addToCartButton.classList.remove(
-          "added"
-        );
-
-        addToCartButton.innerHTML =
-          `Add to cozy bag <span>♡</span>`;
-
-      }, 1600);
-
-    }
-  );
-
-
-  /* =======================================================
-     WISHLIST
-     ======================================================= */
-
-  wishlistButton?.addEventListener(
-    "click",
-    () => {
-
-      wishlistButton.classList.toggle(
-        "is-liked"
-      );
-
-      const liked =
-        wishlistButton.classList.contains(
-          "is-liked"
-        );
-
-      wishlistButton.textContent =
-        liked ? "♥" : "♡";
-
-      wishlistButton.setAttribute(
-        "aria-pressed",
-        liked
-      );
-
-      showToast(
-        liked
-          ? "Added to your little wishlist ♡"
-          : "Removed from wishlist"
-      );
-
-    }
-  );
-
-
-  /* =======================================================
-     RELATED PRODUCTS
-     ======================================================= */
-
-  function renderRelatedProducts() {
-
-    if (!relatedProducts) {
-      return;
-    }
-
-
-    const related =
-      PRODUCTS
-        .filter(item =>
-          item.id !== product.id &&
-          (
-            item.category ===
-              product.category ||
-            item.mood ===
-              product.mood
-          )
-        )
-        .slice(0, 4);
-
-
-    relatedProducts.innerHTML =
-      related.map(item => `
-
-        <a
-          class="related-card"
-          href="product.html?id=${item.id}"
-        >
-
-          <div
-            class="related-visual"
-            style="
-              --tone-a:${item.colors[0]};
-              --tone-b:${item.colors[1]};
-            "
-          >
-
-            <div
-              class="related-emoji"
-            >
-              ${item.emoji}
-            </div>
-
-          </div>
-
-          <div class="related-info">
-
-            <h3>
-              ${item.name}
-            </h3>
-
-            <p>
-              ${formatPrice(item.price)}
-            </p>
-
-          </div>
-
-        </a>
-
-      `).join("");
-
-  }
-
-
-  renderRelatedProducts();
-
-}
-
-
-document.querySelectorAll(
-  "[data-store-name]"
-).forEach(element => {
-
-  element.textContent =
-    STORE_CONFIG.name;
-
-});
-
-
-const year =
-  document.querySelector("#year");
-
-if (year) {
-
-  year.textContent =
-    new Date().getFullYear();
-
-}
-
-
-updateBagCount();
