@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Cozy Store</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="checkout-header">
+
+        <a href="index.html" class="logo">
+            Cozy<span>Store</span>
+        </a>
+
+        <a href="cart.html" class="back-cart">
+            ← Back to Cart
+        </a>
+
+    </header>
+
+
+    <!-- ================= CHECKOUT ================= -->
+
+    <main class="checkout-container">
+
+        <div class="checkout-title">
+
+            <span class="title-small">Almost there ✨</span>
+
+            <h1>Checkout</h1>
+
+            <p>Complete your details and place your cozy order.</p>
+
+        </div>
+
+
+        <div class="checkout-layout">
+
+
+            <!-- ================= CUSTOMER FORM ================= -->
+
+            <section class="checkout-form-card">
+
+                <h2>Delivery Details</h2>
+
+                <p class="section-description">
+                    Please enter the information needed to deliver your order.
+                </p>
+
+
+                <form id="checkoutForm">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="customerName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="customerPhone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="customerPhone"
+                            placeholder="07XXXXXXXX"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="customerEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="customerEmail"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="form-group">
+
+                        <label for="customerAddress">
+                            Delivery Address
+                        </label>
+
+                        <textarea
+                            id="customerAddress"
+                            rows="3"
+                            placeholder="House number, street, area..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- CITY -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="customerCity">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerCity"
+                                placeholder="e.g. Colombo"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customerPostal">
+                                Postal Code
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerPostal"
+                                placeholder="Postal code"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="payment-section">
+
+                        <h2>Payment Method</h2>
+
+                        <div class="payment-options">
+
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    value="cash"
+                                    checked
+                                >
+
+                                <div class="payment-content">
+
+                                    <span class="payment-icon">💵</span>
+
+                                    <div>
+                                        <strong>Cash on Delivery</strong>
+
+                                        <small>
+                                            Pay when your order arrives
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    value="bank"
+                                >
+
+                                <div class="payment-content">
+
+                                    <span class="payment-icon">🏦</span>
+
+                                    <div>
+                                        <strong>Bank Transfer</strong>
+
+                                        <small>
+                                            Payment instructions will be provided
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="place-order-btn"
+                    >
+                        Place Order
+                        <span>♡</span>
+                    </button>
+
+
+                </form>
+
+            </section>
+
+
+
+            <!-- ================= ORDER SUMMARY ================= -->
+
+            <aside class="order-summary">
+
+                <div class="summary-card">
+
+                    <h2>Your Order</h2>
+
+                    <div id="checkoutItems"></div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="price-row">
+
+                        <span>Subtotal</span>
+
+                        <strong id="checkoutSubtotal">
+                            Rs. 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="price-row">
+
+                        <span>Delivery</span>
+
+                        <strong id="checkoutDelivery">
+                            Rs. 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="total-row">
+
+                        <span>Total</span>
+
+                        <strong id="checkoutTotal">
+                            Rs. 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="secure-message">
+
+                        🔒
+                        <span>
+                            Your order information is stored securely
+                            on this device.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ================= SUCCESS MODAL ================= -->
+
+    <div
+        id="successModal"
+        class="success-overlay"
+    >
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <span class="success-small">
+                Thank you! ✨
+            </span>
+
+            <h2>Order Placed!</h2>
+
+            <p>
+                Your cozy order has been successfully placed.
+            </p>
+
+            <div class="order-number">
+
+                Order Number
+
+                <strong id="orderNumber">
+                    #
+                </strong>
+
+            </div>
+
+            <button
+                id="continueShopping"
+                class="continue-btn"
+            >
+                Continue Shopping
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/checkout.js"></script>
+
+</body>
+</html>
