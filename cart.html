@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Your cozy shopping bag."
+    >
+
+    <title>Your Bag — cozy.</title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Main CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/cart.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+
+        <a
+            href="index.html"
+            class="brand"
+        >
+            <span>cozy.</span>
+            <small>♡</small>
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="index.html#collections">
+                Collections
+            </a>
+
+            <a href="index.html#desk">
+                Desk
+            </a>
+
+        </nav>
+
+
+        <a
+            href="cart.html"
+            class="bag-link active"
+        >
+
+            Bag
+
+            <span
+                class="bag-count"
+                id="bagCount"
+            >
+                0
+            </span>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="cart-page">
+
+
+    <!-- =================================================
+         PAGE INTRO
+    ================================================== -->
+
+    <section class="cart-intro">
+
+        <div>
+
+            <p class="eyebrow">
+                little things, coming home
+            </p>
+
+            <h1>
+                your cozy bag.
+            </h1>
+
+            <p class="intro-text">
+                A little collection of things
+                you've chosen for your space.
+            </p>
+
+        </div>
+
+
+        <a
+            href="shop.html"
+            class="continue-shopping"
+        >
+            ← Keep shopping
+        </a>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CART CONTENT
+    ================================================== -->
+
+    <section class="cart-layout">
+
+
+        <!-- =============================================
+             CART ITEMS
+        ============================================== -->
+
+        <div class="cart-items-section">
+
+
+            <div class="cart-section-heading">
+
+                <div>
+
+                    <span class="mini-label">
+                        your picks
+                    </span>
+
+                    <h2>
+                        little things
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="clearCartButton"
+                    class="clear-cart-button"
+                    type="button"
+                >
+                    Clear bag
+                </button>
+
+            </div>
+
+
+            <div
+                id="cartItems"
+                class="cart-items"
+            >
+            </div>
+
+
+            <!-- Empty State -->
+
+            <div
+                id="emptyCart"
+                class="empty-cart"
+                hidden
+            >
+
+                <div class="empty-cloud">
+                    ☁️
+                </div>
+
+                <h2>
+                    Your bag feels a little empty.
+                </h2>
+
+                <p>
+                    Maybe a cute little thing
+                    is waiting for you?
+                </p>
+
+                <a
+                    href="shop.html"
+                    class="empty-cart-button"
+                >
+                    Explore the shop
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             ORDER SUMMARY
+        ============================================== -->
+
+        <aside class="order-summary">
+
+
+            <div class="summary-card">
+
+
+                <div class="summary-heading">
+
+                    <span>
+                        your little order
+                    </span>
+
+                    <span>
+                        ♡
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        Rs. 0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong id="delivery">
+                        Rs. 0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="freeDeliveryMessage"
+                    class="free-delivery-message"
+                >
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="total">
+                        Rs. 0
+                    </strong>
+
+                </div>
+
+
+                <div class="delivery-note">
+
+                    <span class="delivery-icon">
+                        🚚
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Cozy delivery
+                        </strong>
+
+                        <p>
+                            Estimated delivery:
+                            2–4 working days
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="checkoutButton"
+                    class="checkout-button"
+                    type="button"
+                >
+                    Continue to checkout
+                    <span>→</span>
+                </button>
+
+
+                <p class="checkout-note">
+
+                    Secure checkout coming soon ♡
+
+                </p>
+
+
+            </div>
+
+
+            <!-- Trust points -->
+
+            <div class="cart-perks">
+
+                <div>
+
+                    <span>♡</span>
+
+                    <p>
+                        Carefully packed
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span>☁</span>
+
+                    <p>
+                        Cozy little service
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span>✦</span>
+
+                    <p>
+                        Made for happy desks
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-brand">
+
+        <strong>
+            cozy.♡
+        </strong>
+
+        <p>
+            small things for softer days.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="#">
+            Instagram
+        </a>
+
+        <a href="#">
+            TikTok
+        </a>
+
+        <a href="#">
+            Contact
+        </a>
+
+        <span>
+            © <span id="year"></span> cozy. · made with ♡
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    id="toast"
+    class="toast"
+>
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="js/products.js"></script>
+
+<script src="js/cart.js"></script>
+
+
+</body>
+
+</html>
