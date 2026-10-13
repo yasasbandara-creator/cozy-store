@@ -444,6 +444,14 @@
 }
 
 
+.checkout-item-emoji {
+    display: grid;
+    place-items: center;
+    font-size: 34px;
+    background: linear-gradient(135deg, var(--blue), var(--cream));
+}
+
+
 .checkout-item-info {
 
     flex: 1;
