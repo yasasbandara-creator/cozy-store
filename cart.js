@@ -709,9 +709,8 @@ checkoutButton?.addEventListener(
         }
 
 
-        showToast(
-            "Checkout is coming in the next step ✨"
-        );
+        window.location.href =
+            "checkout.html";
 
     }
 );
