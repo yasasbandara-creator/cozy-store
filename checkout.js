@@ -95,8 +95,20 @@ function getItemImage(item) {
     return (
         item.image ||
         item.img ||
-        "images/placeholder.jpg"
+        null
     );
+
+}
+
+
+function getItemEmoji(item) {
+
+    const product =
+        typeof getProduct === "function"
+            ? getProduct(item.id)
+            : null;
+
+    return product?.emoji || "♡";
 
 }
 
@@ -141,13 +153,22 @@ function renderCheckoutItems() {
             "checkout-item";
 
 
+        const image = getItemImage(item);
+        const visual = image
+            ? `<img
+                    class="checkout-item-image"
+                    src="${image}"
+                    alt="${getItemName(item)}"
+                >`
+            : `<div
+                    class="checkout-item-image checkout-item-emoji"
+                    aria-hidden="true"
+                >${getItemEmoji(item)}</div>`;
+
+
         itemElement.innerHTML = `
 
-            <img
-                class="checkout-item-image"
-                src="${getItemImage(item)}"
-                alt="${getItemName(item)}"
-            >
+            ${visual}
 
             <div class="checkout-item-info">
 
