@@ -1318,3 +1318,232 @@
     }
 
 }
+
+
+/* =====================================================
+   COZY STORE — CART HEADER & FOOTER FIX
+   Paste at the VERY END of css/cart.css
+   ===================================================== */
+
+/* ---------- HEADER ---------- */
+
+.site-header {
+    position: relative;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 15px 5%;
+    background: rgba(250, 248, 241, 0.96);
+    border-bottom: 1px solid rgba(56, 69, 72, 0.08);
+    box-sizing: border-box;
+}
+
+.site-header .header-inner {
+    width: 100%;
+    max-width: 1400px;
+    min-height: 48px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.site-header .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+
+    color: var(--text, #384548);
+    text-decoration: none;
+    font-family: "Fredoka", sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.site-header .brand small {
+    color: #f29bb5;
+    font-size: 15px;
+}
+
+.site-header .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(14px, 2.2vw, 32px);
+}
+
+.site-header .main-nav a,
+.site-header .bag-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text, #384548);
+    text-decoration: none;
+    font-family: "Quicksand", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.site-header .main-nav a:hover,
+.site-header .main-nav a:focus-visible,
+.site-header .bag-link:hover {
+    color: var(--matcha-dark, #718b68);
+}
+
+.site-header .bag-link {
+    position: relative;
+    flex-shrink: 0;
+    gap: 8px;
+}
+
+.site-header .bag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 21px;
+    height: 21px;
+    padding: 0 5px;
+    box-sizing: border-box;
+
+    border-radius: 50px;
+    background: var(--matcha, #dcebd5);
+    color: var(--text, #384548);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.site-footer {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 45px;
+    padding: 30px 5% 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    background: #f1efe7;
+    border-top: 1px solid rgba(56, 69, 72, 0.08);
+}
+
+.site-footer .footer-brand {
+    min-width: 0;
+}
+
+.site-footer .footer-brand strong {
+    display: inline-block;
+    margin-bottom: 6px;
+
+    color: var(--text, #384548);
+    font-family: "Fredoka", sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.site-footer .footer-brand p {
+    margin: 0;
+    color: var(--text-soft, #788386);
+    font-family: "Quicksand", sans-serif;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.site-footer .footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+}
+
+.site-footer .footer-links a,
+.site-footer .footer-links span {
+    display: inline-block;
+    margin: 0;
+    color: var(--text-soft, #788386);
+    font-family: "Quicksand", sans-serif;
+    font-size: 11px;
+    line-height: 1.8;
+    text-decoration: none;
+}
+
+.site-footer .footer-links a:hover {
+    color: var(--text, #384548);
+}
+
+
+/* ---------- RESPONSIVE TABLET ---------- */
+
+@media (max-width: 768px) {
+    .site-header {
+        padding: 14px 5%;
+    }
+
+    .site-header .header-inner {
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .site-header .brand {
+        font-size: 24px;
+    }
+
+    .site-header .main-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 22px;
+    }
+
+    .site-header .bag-link {
+        margin-left: auto;
+    }
+
+    .site-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+        padding: 28px 5% 22px;
+    }
+
+    .site-footer .footer-links {
+        justify-content: flex-start;
+        gap: 10px 18px;
+    }
+}
+
+
+/* ---------- RESPONSIVE MOBILE ---------- */
+
+@media (max-width: 420px) {
+    .site-header .main-nav {
+        gap: 10px 15px;
+    }
+
+    .site-header .main-nav a {
+        font-size: 12px;
+    }
+
+    .site-footer .footer-links {
+        width: 100%;
+        gap: 8px 16px;
+    }
+
+    .site-footer .footer-links a,
+    .site-footer .footer-links span {
+        font-size: 10px;
+    }
+}
