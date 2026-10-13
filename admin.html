@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cozy Admin Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue: #b9e7f5;
+  --blue-dark: #438da8;
+  --cream: #fffaf0;
+  --white: #ffffff;
+  --ink: #35434b;
+  --muted: #89969b;
+  --line: #e7edf0;
+  --pink: #ffe3ed;
+  --green: #e0f4e7;
+  --shadow: 0 8px 28px rgba(68, 111, 130, .08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f5f9fa;
+  color: var(--ink);
+  font-family: 'Quicksand', sans-serif;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button { cursor: pointer; }
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  padding: 26px 18px;
+  background: white;
+  border-right: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 31px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin: 0 0 4px;
+}
+
+.sidebar-sub {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 35px;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #a4afb4;
+  letter-spacing: 1.6px;
+  margin: 25px 10px 10px;
+}
+
+.nav {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 13px 12px;
+  text-align: left;
+  border-radius: 13px;
+  color: #68777d;
+  font-weight: 700;
+  margin-bottom: 5px;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.nav:hover, .nav.active {
+  background: #eaf7fb;
+  color: var(--blue-dark);
+}
+
+.sidebar-note {
+  margin-top: 35px;
+  background: var(--cream);
+  border-radius: 17px;
+  padding: 15px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.main {
+  min-width: 0;
+  flex: 1;
+  padding: 27px 32px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.topbar h1 {
+  font: 600 27px 'Fredoka', sans-serif;
+  margin: 0;
+}
+
+.topbar p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.admin-tag {
+  background: white;
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.welcome {
+  background: linear-gradient(120deg, #dff5fb, #fff1f5);
+  border-radius: 22px;
+  padding: 25px;
+  margin-bottom: 22px;
+}
+
+.welcome h2 {
+  font: 600 23px 'Fredoka', sans-serif;
+  margin: 0 0 8px;
+}
+
+.welcome p {
+  color: #687b83;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat, .panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.stat-icon {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.stat-number {
+  font: 600 28px 'Fredoka', sans-serif;
+  margin: 8px 0 5px;
+  overflow-wrap: anywhere;
+}
+
+.stat-note {
+  color: #829197;
+  font-size: 11px;
+}
+
+.panel { margin-bottom: 22px; }
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.panel-head h2 {
+  font: 600 20px 'Fredoka', sans-serif;
+  margin: 0;
+}
+
+.btn {
+  border: 0;
+  border-radius: 11px;
+  padding: 11px 15px;
+  background: var(--blue);
+  color: #315968;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.btn:hover { filter: brightness(.97); }
+
+.btn.secondary {
+  background: #f0f3f4;
+  color: #586970;
+}
+
+.btn.danger {
+  background: #ffe4e8;
+  color: #a33d50;
+}
+
+.btn.small {
+  padding: 8px 10px;
+  font-size: 11px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 530px;
+}
+
+th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  background: #fafcfd;
+}
+
+th, td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf1f2;
+}
+
+td { font-weight: 600; }
+
+.status {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 9px;
+  background: var(--green);
+  color: #377451;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.status.pending {
+  background: #fff0d9;
+  color: #936b22;
+}
+
+.status.cancelled {
+  background: #ffe5e8;
+  color: #a33d50;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 32px 12px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dfe8eb;
+  border-radius: 11px;
+  outline: none;
+  background: white;
+  color: var(--ink);
+}
+
+.field input:focus, .field select:focus,
+.field textarea:focus {
+  border-color: #85cce1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.notice {
+  background: #fff8e9;
+  color: #80632e;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.search {
+  width: 100%;
+  max-width: 280px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: none;
+}
+
+.footer {
+  padding: 20px 0;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .main { padding: 22px; }
+}
+
+@media (max-width: 700px) {
+  .layout { display: block; }
+
+  .sidebar {
+    width: 100%;
+    padding: 15px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo { font-size: 26px; }
+  .sidebar-sub { margin-bottom: 14px; }
+
+  .nav-label, .sidebar-note { display: none; }
+
+  .sidebar nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 7px;
+    padding-bottom: 3px;
+  }
+
+  .nav {
+    width: auto;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 11px 12px;
+    font-size: 12px;
+  }
+
+  .main { padding: 19px 14px; }
+
+  .topbar {
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .topbar h1 { font-size: 23px; }
+  .admin-tag { font-size: 10px; padding: 9px; }
+
+  .welcome { padding: 20px; }
+  .welcome h2 { font-size: 21px; }
+
+  .stats { gap: 10px; }
+  .stat { padding: 14px; }
+  .stat-number { font-size: 23px; }
+  .stat-label { font-size: 11px; }
+
+  .panel { padding: 15px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .search { max-width: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">cozy<span style="color:#f0a8c6">.</span></div>
+    <div class="sidebar-sub">STORE MANAGEMENT</div>
+
+    <nav>
+      <div class="nav-label">WORKSPACE</div>
+
+      <button class="nav active" data-page="dashboard">🏠 Dashboard</button>
+      <button class="nav" data-page="products">🛍️ Products</button>
+      <button class="nav" data-page="add-product">➕ Add Product</button>
+      <button class="nav" data-page="orders">📦 Orders</button>
+    </nav>
+
+    <div class="sidebar-note">
+      ☁️ <strong>Your cozy workspace</strong><br>
+      Manage your little shop in one place.
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <p>Welcome back! Here's your store overview.</p>
+      </div>
+      <div class="admin-tag">🌷 Store Admin</div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="page active" id="dashboard">
+
+      <div class="welcome">
+        <h2>Little things, better days ☁️</h2>
+        <p>Welcome to your Cozy store dashboard. Check your products, review your orders, and keep your shop organised.</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-icon">🛍️</div>
+          <div class="stat-label">Total Products</div>
+          <div class="stat-number" id="totalProducts">0</div>
+          <div class="stat-note">Products in this admin catalogue</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-number" id="totalOrders">0</div>
+          <div class="stat-note">Orders saved in this browser</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-label">Pending Orders</div>
+          <div class="stat-number" id="pendingOrders">0</div>
+          <div class="stat-note">Orders awaiting processing</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Recorded Sales</div>
+          <div class="stat-number" id="totalSales">Rs. 0</div>
+          <div class="stat-note">Completed orders only</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Recent Orders</h2>
+          <button class="btn" data-go="orders">View All →</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentOrders"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Quick Actions</h2>
+        </div>
+        <div class="form-actions">
+          <button class="btn" data-go="add-product">＋ Add New Product</button>
+          <button class="btn secondary" data-go="products">Manage Products</button>
+          <button class="btn secondary" data-go="orders">Check Orders</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="page" id="products">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Product Catalogue</h2>
+          <button class="btn" data-go="add-product">＋ Add Product</button>
+        </div>
+
+        <input class="search" id="productSearch"
+          placeholder="Search products..." aria-label="Search products">
+
+        <div class="table-wrap" style="margin-top:18px">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productRows"></tbody>
+          </table>
+        </div>
+        <p style="font-size:11px;color:#89969b">
+          These are products managed by this admin page. Your existing shop catalogue is not automatically replaced.
+        </p>
+      </div>
+    </section>
+
+    <!-- ADD / EDIT PRODUCT -->
+    <section class="page" id="add-product">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 id="productFormTitle">Add a Product 🌷</h2>
+        </div>
+
+        <div class="notice">
+          Product changes are stored in this browser. Connecting them to your existing shop requires matching its product data format and JavaScript.
+        </div>
+
+        <form id="productForm">
+          <input type="hidden" id="editProductId">
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="pName">Product Name *</label>
+              <input id="pName" required maxlength="100"
+                placeholder="e.g. Pastel Notebook">
+            </div>
+
+            <div class="field">
+              <label for="pCategory">Category *</label>
+              <select id="pCategory" required>
+                <option value="">Choose category</option>
+                <option>Stationery</option>
+                <option>Desk Accessories</option>
+                <option>Gadgets</option>
+                <option>Keychains & Charms</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="pPrice">Price (LKR) *</label>
+              <input id="pPrice" type="number" min="0.01"
+                step="0.01" required placeholder="850">
+            </div>
+
+            <div class="field">
+              <label for="pStock">Stock Quantity *</label>
+              <input id="pStock" type="number" min="0"
+                step="1" required placeholder="20">
+            </div>
+
+            <div class="field">
+              <label for="pEmoji">Product Emoji</label>
+              <input id="pEmoji" maxlength="12" placeholder="📒">
+            </div>
+
+            <div class="field">
+              <label for="pBadge">Badge (optional)</label>
+              <input id="pBadge" maxlength="30"
+                placeholder="Best Seller">
+            </div>
+
+            <div class="field full">
+              <label for="pDescription">Short Description</label>
+              <textarea id="pDescription" rows="3"
+                maxlength="500" placeholder="Describe your product..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn">Save Product</button>
+            <button type="button" class="btn secondary"
+              id="cancelEdit">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="page" id="orders">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Customer Orders</h2>
+          <button class="btn secondary" id="refreshOrders">↻ Refresh</button>
+        </div>
+
+        <div class="notice">
+          This page displays orders only when they exist in the browser's Cozy admin order storage. It does not yet connect to checkout or a server database.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="orderRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      cozy. admin · little things, better days ♡
+    </footer>
+  </main>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const PRODUCT_KEY = "cozy_admin_products_v1";
+  const ORDER_KEY = "cozy_admin_orders_v1";
+
+  const $ = id => document.getElementById(id);
+
+  let products = readStorage(PRODUCT_KEY, []);
+  let orders = readStorage(ORDER_KEY, []);
+
+  function readStorage(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(value) ? value : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function saveProducts() {
+    localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
+  }
+
+  function saveOrders() {
+    localStorage.setItem(ORDER_KEY, JSON.stringify(orders));
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function money(value) {
+    return "Rs. " + Number(value || 0).toLocaleString("en-LK", {
+      maximumFractionDigits: 2
+    });
+  }
+
+  function goTo(page) {
+    document.querySelectorAll(".page").forEach(section => {
+      section.classList.toggle("active", section.id === page);
+    });
+
+    document.querySelectorAll(".nav").forEach(button => {
+      button.classList.toggle("active", button.dataset.page === page);
+    });
+
+    const titles = {
+      dashboard: "Dashboard",
+      products: "Products",
+      "add-product": "Product Editor",
+      orders: "Orders"
+    };
+
+    $("pageTitle").textContent = titles[page] || "Dashboard";
+
+    if (page === "dashboard") renderDashboard();
+    if (page === "products") renderProducts();
+    if (page === "orders") renderOrders();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.querySelectorAll("[data-page]").forEach(button => {
+    button.addEventListener("click", () => goTo(button.dataset.page));
+  });
+
+  document.querySelectorAll("[data-go]").forEach(button => {
+    button.addEventListener("click", () => goTo(button.dataset.go));
+  });
+
+  function renderDashboard() {
+    $("totalProducts").textContent = products.length;
+    $("totalOrders").textContent = orders.length;
+    $("pendingOrders").textContent = orders.filter(
+      order => (order.status || "Pending") === "Pending"
+    ).length;
+
+    const sales = orders
+      .filter(order => order.status === "Completed")
+      .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+    $("totalSales").textContent = money(sales);
+
+    const recent = [...orders].slice(-5).reverse();
+
+    $("recentOrders").innerHTML = recent.length
+      ? recent.map(order => `
+        <tr>
+          <td>${escapeHTML(order.id)}</td>
+          <td>${escapeHTML(order.customer || "Customer")}</td>
+          <td>${money(order.total)}</td>
+          <td>${statusHTML(order.status || "Pending")}</td>
+        </tr>
+      `).join("")
+      : `<tr><td colspan="4" class="empty">No orders recorded yet ♡</td></tr>`;
+  }
+
+  function renderProducts() {
+    const search = $("productSearch").value.toLowerCase().trim();
+
+    const filtered = products.filter(product =>
+      `${product.name} ${product.category}`.toLowerCase().includes(search)
+    );
+
+    $("productRows").innerHTML = filtered.length
+      ? filtered.map(product => `
+        <tr>
+          <td>${escapeHTML(product.emoji || "📦")}
+            ${escapeHTML(product.name)}</td>
+          <td>${escapeHTML(product.category)}</td>
+          <td>${money(product.price)}</td>
+          <td>${Number(product.stock)}</td>
+          <td>
+            <button class="btn small" data-edit="${escapeHTML(product.id)}">Edit</button>
+            <button class="btn small danger" data-delete="${escapeHTML(product.id)}">Delete</button>
+          </td>
+        </tr>
+      `).join("")
+      : `<tr><td colspan="5" class="empty">No products yet. Add your first product! 🌷</td></tr>`;
+  }
+
+  function statusHTML(status) {
+    const className = status === "Completed"
+      ? ""
+      : status === "Cancelled" ? "cancelled" : "pending";
+
+    return `<span class="status ${className}">${escapeHTML(status)}</span>`;
+  }
+
+  function renderOrders() {
+    $("orderRows").innerHTML = orders.length
+      ? [...orders].reverse().map(order => `
+        <tr>
+          <td>${escapeHTML(order.id)}</td>
+          <td>${escapeHTML(order.customer || "Customer")}</td>
+          <td>${escapeHTML(order.date || "—")}</td>
+          <td>${money(order.total)}</td>
+          <td>${statusHTML(order.status || "Pending")}</td>
+          <td>
+            <select aria-label="Update order status"
+              data-status="${escapeHTML(order.id)}">
+              ${["Pending", "Processing", "Completed", "Cancelled"]
+                .map(status => `<option ${status === (order.status || "Pending") ? "selected" : ""}>${status}</option>`)
+                .join("")}
+            </select>
+          </td>
+        </tr>
+      `).join("")
+      : `<tr><td colspan="6" class="empty">No orders found ♡</td></tr>`;
+  }
+
+  function resetProductForm() {
+    $("productForm").reset();
+    $("editProductId").value = "";
+    $("productFormTitle").textContent = "Add a Product 🌷";
+  }
+
+  $("productForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const editId = $("editProductId").value;
+
+    const product = {
+      id: editId || (
+        "cozy-" + Date.now() + "-" +
+        Math.random().toString(36).slice(2, 7)
+      ),
+      name: $("pName").value.trim(),
+      category: $("pCategory").value,
+      price: Number($("pPrice").value),
+      stock: Number($("pStock").value),
+      emoji: $("pEmoji").value.trim() || "📦",
+      badge: $("pBadge").value.trim(),
+      description: $("pDescription").value.trim()
+    };
+
+    if (!product.name || !product.category ||
+        !Number.isFinite(product.price) || product.price <= 0 ||
+        !Number.isInteger(product.stock) || product.stock < 0) {
+      alert("Please check the product details.");
+      return;
+    }
+
+    if (editId) {
+      products = products.map(item =>
+        item.id === editId ? product : item
+      );
+    } else {
+      products.push(product);
+    }
+
+    saveProducts();
+    resetProductForm();
+    renderDashboard();
+    alert("Product saved in the admin catalogue!");
+    goTo("products");
+  });
+
+  $("productRows").addEventListener("click", event => {
+    const editButton = event.target.closest("[data-edit]");
+    const deleteButton = event.target.closest("[data-delete]");
+
+    if (editButton) {
+      const product = products.find(
+        item => item.id === editButton.dataset.edit
+      );
+
+      if (!product) return;
+
+      $("editProductId").value = product.id;
+      $("pName").value = product.name;
+      $("pCategory").value = product.category;
+      $("pPrice").value = product.price;
+      $("pStock").value = product.stock;
+      $("pEmoji").value = product.emoji || "";
+      $("pBadge").value = product.badge || "";
+      $("pDescription").value = product.description || "";
+      $("productFormTitle").textContent = "Edit Product ✏️";
+
+      goTo("add-product");
+    }
+
+    if (deleteButton) {
+      const product = products.find(
+        item => item.id === deleteButton.dataset.delete
+      );
+
+      if (!product) return;
+
+      if (confirm(`Delete "${product.name}" from the admin catalogue?`)) {
+        products = products.filter(item => item.id !== product.id);
+        saveProducts();
+        renderProducts();
+        renderDashboard();
+      }
+    }
+  });
+
+  $("productSearch").addEventListener("input", renderProducts);
+
+  $("cancelEdit").addEventListener("click", () => {
+    resetProductForm();
+    goTo("products");
+  });
+
+  $("refreshOrders").addEventListener("click", () => {
+    orders = readStorage(ORDER_KEY, []);
+    renderOrders();
+    renderDashboard();
+  });
+
+  $("orderRows").addEventListener("change", event => {
+    const select = event.target.closest("[data-status]");
+    if (!select) return;
+
+    const order = orders.find(item => item.id === select.dataset.status);
+    if (!order) return;
+
+    order.status = select.value;
+    saveOrders();
+    renderOrders();
+    renderDashboard();
+  });
+
+  renderDashboard();
+})();
+</script>
+</body>
+</html>
