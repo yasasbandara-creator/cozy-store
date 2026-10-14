@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Support | cozy.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#faf8f1; --white:#fff; --green:#718b68;
+  --light:#e7f0e2; --text:#384548; --muted:#788386;
+  --border:rgba(56,69,72,.13);
+}
+* {box-sizing:border-box}
+body {margin:0;background:var(--bg);color:var(--text);font-family:"Quicksand",sans-serif;line-height:1.6}
+a {color:inherit;text-decoration:none}
+button,input,select,textarea {font:inherit}
+.header {position:sticky;top:0;z-index:5;background:rgba(250,248,241,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav {max-width:1100px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo {font:600 29px "Fredoka",sans-serif;letter-spacing:-1px}
+.logo span {color:var(--green)}
+.links {display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:700}
+.links a:hover {color:var(--green)}
+main {max-width:1050px;width:calc(100% - 32px);margin:42px auto 70px}
+.eyebrow {color:var(--green);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+h1,h2,h3 {font-family:"Fredoka",sans-serif}
+h1 {font-size:clamp(32px,5vw,45px);margin:4px 0}
+.intro {color:var(--muted);margin-top:0}
+.layout {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:22px;margin-top:28px;align-items:start}
+.panel {background:var(--white);border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:0 12px 35px rgba(56,69,72,.05)}
+.panel h2 {margin:0 0 5px;font-size:24px}
+.small {font-size:12px;color:var(--muted);margin-top:0}
+label {display:block;font-size:12px;font-weight:700;margin:16px 0 6px}
+input,select,textarea {width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:12px;background:#fff;color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus {border-color:var(--green);box-shadow:0 0 0 3px rgba(113,139,104,.12)}
+textarea {min-height:130px;resize:vertical}
+button,.btn {border:0;border-radius:12px;background:var(--green);color:#fff;padding:12px 17px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+button:hover,.btn:hover {filter:brightness(.95)}
+button:disabled {opacity:.5;cursor:not-allowed}
+.submit {width:100%;margin-top:18px}
+.notice {display:none;margin-top:15px;border-radius:12px;padding:12px 14px;font-size:12px}
+.notice.success {display:block;background:#e7f2e8;color:#315b48}
+.notice.error {display:block;background:#fff0f0;color:#a23c3c}
+.info-card {background:#f1f5ec;border-radius:16px;padding:16px;margin-top:16px;font-size:13px}
+.info-card strong {display:block;margin-bottom:5px}
+.request {border:1px solid var(--border);border-radius:15px;padding:15px;margin-top:12px;overflow-wrap:anywhere}
+.request-top {display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.request-title {font-weight:700;font-size:13px}
+.pill {font-size:10px;font-weight:700;border-radius:20px;padding:5px 9px;background:#fff0d7;color:#8a641d;white-space:nowrap}
+.pill.resolved {background:#e2f2e4;color:#357349}
+.request p {font-size:12px;margin:9px 0;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}
+.request time {font-size:11px;color:var(--muted)}
+.empty {text-align:center;color:var(--muted);font-size:13px;padding:25px 10px}
+.footer {text-align:center;padding:25px 12px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+[hidden] {display:none!important}
+@media(max-width:720px) {
+  .nav {align-items:flex-start;flex-direction:column}
+  .links {gap:13px}
+  main {margin-top:28px}
+  .layout {grid-template-columns:1fr}
+  .panel {padding:19px}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <nav class="nav">
+    <a class="logo" href="index.html">cozy<span>.</span></a>
+    <div class="links">
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">Cart</a>
+      <a href="account.html">Account</a>
+      <a href="orders.html">My Orders</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="eyebrow">We're here to help ♡</div>
+  <h1>Customer Support</h1>
+  <p class="intro">Questions about an order? Tell us what's happening and keep track of your requests here.</p>
+
+  <div id="signInNotice" class="panel" hidden>
+    <h2>Sign in first</h2>
+    <p class="small">Please sign in to your Cozy customer account to submit a support request or cancellation request.</p>
+    <a class="btn" href="account.html">Go to Account</a>
+  </div>
+
+  <div class="layout" id="supportLayout" hidden>
+    <section class="panel">
+      <h2>Send us a message</h2>
+      <p class="small">Please include enough detail for us to understand your request.</p>
+
+      <form id="supportForm">
+        <label for="supportType">What do you need help with?</label>
+        <select id="supportType" required>
+          <option value="General enquiry">General enquiry</option>
+          <option value="Order question">Order question</option>
+          <option value="Delivery issue">Delivery issue</option>
+          <option value="Payment issue">Payment issue</option>
+          <option value="Product issue">Product issue</option>
+          <option value="Cancellation request">Cancellation request</option>
+          <option value="Return or refund enquiry">Return or refund enquiry</option>
+        </select>
+
+        <div id="orderField" hidden>
+          <label for="orderNumber">Select an order</label>
+          <select id="orderNumber">
+            <option value="">Choose an order</option>
+          </select>
+          <p class="small" id="orderHelp">Select the order related to your message.</p>
+        </div>
+
+        <label for="supportMessage">Message</label>
+        <textarea id="supportMessage" maxlength="2000" required placeholder="Hi Cozy team, I need help with..."></textarea>
+        <p class="small"><span id="charCount">0</span>/2000 characters</p>
+
+        <button class="submit" type="submit">Submit Support Request ♡</button>
+        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="info-card">
+        <strong>♡ Cancellation policy for this demo</strong>
+        You can request cancellation for orders marked Pending or Processing. The request does not cancel the order automatically; the store administrator must review it.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>My Support Requests</h2>
+      <p class="small">Your requests submitted in this browser.</p>
+      <div id="requestList"><div class="empty">Loading your requests…</div></div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">cozy. — little things, better days. ♡</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  const SESSION_KEY = "cozy_customer_session_demo_v1";
+  const ORDERS_KEY = "cozy_store_orders";
+  const TICKETS_KEY = "cozy_support_requests_v1";
+
+  const $ = id => document.getElementById(id);
+  const form = $("supportForm");
+  const typeField = $("supportType");
+  const orderField = $("orderField");
+  const orderSelect = $("orderNumber");
+  const messageField = $("supportMessage");
+  const formNotice = $("formNotice");
+  let signedInEmail = "";
+
+  function readJSON(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    })[c]);
+  }
+
+  function dateText(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "Date unavailable" :
+      date.toLocaleString("en-LK", {
+        year:"numeric", month:"short", day:"numeric",
+        hour:"2-digit", minute:"2-digit"
+      });
+  }
+
+  function currentOrders() {
+    return readJSON(ORDERS_KEY).filter(order =>
+      String(order.customer?.email || "").trim().toLowerCase() === signedInEmail
+    );
+  }
+
+  function updateOrderOptions() {
+    const oldValue = orderSelect.value;
+    const orders = currentOrders();
+
+    orderSelect.innerHTML = '<option value="">Choose an order</option>';
+
+    orders.slice().reverse().forEach(order => {
+      const number = String(order.orderNumber || order.id || "");
+      if (!number) return;
+
+      const option = document.createElement("option");
+      option.value = number;
+      option.textContent = number + " — " + (order.status || "Pending");
+      orderSelect.appendChild(option);
+    });
+
+    if ([...orderSelect.options].some(option => option.value === oldValue)) {
+      orderSelect.value = oldValue;
+    }
+  }
+
+  function updateOrderField() {
+    const isOrderRelated = [
+      "Order question", "Delivery issue", "Payment issue",
+      "Cancellation request", "Return or refund enquiry"
+    ].includes(typeField.value);
+
+    orderField.hidden = !isOrderRelated;
+    orderSelect.required = isOrderRelated;
+
+    $("orderHelp").textContent = typeField.value === "Cancellation request"
+      ? "Only Pending or Processing orders are eligible for a cancellation request."
+      : "Select the order related to your message.";
+  }
+
+  function showNotice(message, type) {
+    formNotice.className = "notice " + type;
+    formNotice.textContent = message;
+  }
+
+  function renderRequests() {
+    const tickets = readJSON(TICKETS_KEY)
+      .filter(ticket =>
+        String(ticket.customerEmail || "").trim().toLowerCase() === signedInEmail
+      )
+      .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const container = $("requestList");
+
+    if (!tickets.length) {
+      container.innerHTML = '<div class="empty">No support requests yet. If you need help, send us a message here. ♡</div>';
+      return;
+    }
+
+    container.innerHTML = tickets.map(ticket => {
+      const isResolved = ["Resolved", "Closed"].includes(ticket.status);
+      return `
+        <article class="request">
+          <div class="request-top">
+            <div class="request-title">${escapeHTML(ticket.type)}</div>
+            <span class="pill ${isResolved ? "resolved" : ""}">${escapeHTML(ticket.status || "Open")}</span>
+          </div>
+          <p>${escapeHTML(ticket.orderNumber ? "Order: " + ticket.orderNumber + "\n" : "")}${escapeHTML(ticket.message)}</p>
+          <time>${escapeHTML(dateText(ticket.createdAt))}</time>
+          <div class="small">Reference: ${escapeHTML(ticket.ticketNumber)}</div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function initialise() {
+    signedInEmail = String(localStorage.getItem(SESSION_KEY) || "")
+      .trim().toLowerCase();
+
+    if (!signedInEmail) {
+      $("signInNotice").hidden = false;
+      $("supportLayout").hidden = true;
+      return;
+    }
+
+    $("signInNotice").hidden = true;
+    $("supportLayout").hidden = false;
+
+    updateOrderOptions();
+    updateOrderField();
+    renderRequests();
+  }
+
+  typeField.addEventListener("change", updateOrderField);
+  messageField.addEventListener("input", () => {
+    $("charCount").textContent = messageField.value.length;
+  });
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const type = typeField.value;
+    const message = messageField.value.trim();
+    const orderNumber = orderSelect.value;
+
+    if (!signedInEmail) {
+      showNotice("Please sign in again before submitting.", "error");
+      return;
+    }
+
+    if (message.length < 5) {
+      showNotice("Please enter a little more detail in your message.", "error");
+      return;
+    }
+
+    const requiresOrder = [
+      "Order question", "Delivery issue", "Payment issue",
+      "Cancellation request", "Return or refund enquiry"
+    ].includes(type);
+
+    let order = null;
+
+    if (requiresOrder) {
+      if (!orderNumber) {
+        showNotice("Please select the order related to your request.", "error");
+        return;
+      }
+
+      order = currentOrders().find(item =>
+        String(item.orderNumber || item.id || "") === orderNumber
+      );
+
+      if (!order) {
+        showNotice("That order could not be found for your account. Refresh and try again.", "error");
+        return;
+      }
+    }
+
+    if (type === "Cancellation request") {
+      const status = order.status || "Pending";
+
+      if (!["Pending", "Processing"].includes(status)) {
+        showNotice("This order is not eligible for cancellation requests because its status is " + status + ".", "error");
+        return;
+      }
+
+      const tickets = readJSON(TICKETS_KEY);
+      const alreadyRequested = tickets.some(ticket =>
+        ticket.customerEmail.toLowerCase() === signedInEmail &&
+        ticket.orderNumber === orderNumber &&
+        ticket.type === "Cancellation request" &&
+        !["Resolved", "Closed"].includes(ticket.status)
+      );
+
+      if (alreadyRequested) {
+        showNotice("You already have an open cancellation request for this order.", "error");
+        return;
+      }
+    }
+
+    const tickets = readJSON(TICKETS_KEY);
+    const ticket = {
+      ticketNumber: "CZ-" + Date.now().toString().slice(-9),
+      type,
+      message,
+      orderNumber: orderNumber || "",
+      customerEmail: signedInEmail,
+      status: "Open",
+      createdAt: new Date().toISOString()
+    };
+
+    tickets.push(ticket);
+
+    try {
+      localStorage.setItem(TICKETS_KEY, JSON.stringify(tickets));
+    } catch (error) {
+      showNotice("Could not save your request in this browser. Please try again.", "error");
+      return;
+    }
+
+    form.reset();
+    $("charCount").textContent = "0";
+    updateOrderOptions();
+    updateOrderField();
+    showNotice("Your request has been saved. Reference: " + ticket.ticketNumber + ". Please keep this reference for your records.", "success");
+    renderRequests();
+  });
+
+  window.addEventListener("focus", () => {
+    initialise();
+  });
+
+  window.addEventListener("storage", event => {
+    if ([ORDERS_KEY, TICKETS_KEY, SESSION_KEY].includes(event.key)) {
+      initialise();
+    }
+  });
+
+  initialise();
+})();
+</script>
+</body>
+</html>

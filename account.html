@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — cozy.</title>
+  <meta name="theme-color" content="#f7f8f2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fredoka:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f7f8f2;
+      --paper: #fffefb;
+      --ink: #263b35;
+      --muted: #77847d;
+      --green: #b9d8c0;
+      --green-dark: #315b48;
+      --blue: #dcecf5;
+      --pink: #f8e3e6;
+      --line: #e7e9df;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Quicksand", sans-serif;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button, input {
+      font: inherit;
+    }
+
+    button { cursor: pointer; }
+
+    .navbar {
+      min-height: 76px;
+      padding: 16px 6%;
+      background: #fffefbeF;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font: 600 34px "Fredoka", sans-serif;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span { color: #77a98a; }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover { color: #609577; }
+
+    .page {
+      width: min(1040px, 92%);
+      margin: 48px auto 65px;
+    }
+
+    .intro { text-align: center; margin-bottom: 30px; }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: var(--blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: "Fredoka", sans-serif;
+      font-weight: 500;
+    }
+
+    .intro h1 {
+      font-size: clamp(32px, 5vw, 47px);
+      margin: 15px 0 8px;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .welcome-card, .account-card {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px #314b3510;
+    }
+
+    .welcome-card {
+      padding: 34px;
+      background: linear-gradient(145deg, #e3f0e4, #e9f1f7 65%, #fff0e8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 390px;
+    }
+
+    .welcome-card .big-emoji {
+      font-size: 76px;
+      margin: 18px 0;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .welcome-card h2 {
+      font-size: 29px;
+      line-height: 1.25;
+      margin: 0 0 12px;
+    }
+
+    .welcome-card p {
+      font-size: 13px;
+      line-height: 1.9;
+      color: #52675d;
+    }
+
+    .handwriting {
+      font: 600 28px "Caveat", cursive;
+      color: var(--green-dark);
+      margin-top: 18px;
+    }
+
+    .account-card {
+      background: var(--paper);
+      padding: clamp(22px, 4vw, 36px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      background: #f1f2eb;
+      border-radius: 14px;
+      padding: 5px;
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      flex: 1;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 8px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .tab.active {
+      background: white;
+      color: var(--green-dark);
+      box-shadow: 0 2px 8px #263b350c;
+    }
+
+    .form-title { font-size: 25px; margin: 0 0 6px; }
+
+    .form-subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 24px;
+      line-height: 1.7;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 47px;
+      padding: 12px 14px;
+      border: 1px solid #e1e5dc;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .field input:focus {
+      border-color: #8dbb9a;
+      box-shadow: 0 0 0 3px #b9d8c033;
+    }
+
+    .primary-btn {
+      width: 100%;
+      min-height: 49px;
+      border: 0;
+      border-radius: 13px;
+      padding: 13px 16px;
+      background: var(--green-dark);
+      color: white;
+      font-weight: 700;
+      transition: transform .2s, background .2s;
+    }
+
+    .primary-btn:hover {
+      background: #244a39;
+      transform: translateY(-2px);
+    }
+
+    .message {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 11px;
+      margin: 0 0 16px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .message.show { display: block; }
+    .message.error { background: #fbe8e7; color: #9a3d3d; }
+    .message.success { background: #e5f3e7; color: #315b48; }
+
+    .small-note {
+      font-size: 10px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-top: 17px;
+    }
+
+    .hidden { display: none !important; }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border-radius: 20px;
+      background: var(--pink);
+      font-size: 28px;
+    }
+
+    .profile-top h2 { margin: 0 0 5px; font-size: 23px; }
+    .profile-top p { margin: 0; color: var(--muted); font-size: 12px; }
+
+    .profile-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .secondary-btn {
+      min-height: 45px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .secondary-btn:hover { background: #f4f7f1; }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 720px) {
+      .navbar { padding: 14px 5%; min-height: 65px; }
+      .logo { font-size: 29px; }
+      .nav-links { gap: 13px; font-size: 11px; }
+      .page { margin: 30px auto 40px; }
+      .layout { grid-template-columns: 1fr; }
+      .welcome-card { min-height: auto; padding: 25px; }
+      .welcome-card .big-emoji { font-size: 54px; margin: 10px 0; }
+      .welcome-card h2 { font-size: 25px; }
+      .welcome-card .handwriting { margin-top: 10px; }
+      .account-card { padding: 23px 19px; }
+    }
+
+    @media (max-width: 380px) {
+      .nav-links { gap: 9px; }
+      .nav-links a { font-size: 10px; }
+      .profile-actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="logo" href="index.html">cozy<span>.</span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">My Cart</a>
+      <a href="orders.html">My Orders</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <span class="eyebrow">Your little corner</span>
+      <h1>Welcome to your cozy space ☁️</h1>
+      <p>Keep your details together and make every shopping moment feel a little more personal.</p>
+    </section>
+
+    <div class="layout">
+      <aside class="welcome-card">
+        <div>
+          <span class="eyebrow">A little note for you</span>
+          <div class="big-emoji" aria-hidden="true">🧸</div>
+          <h2>Little things.<br>Better days.</h2>
+          <p>Your favorite stationery, cute finds, and everyday essentials — all in one happy place.</p>
+        </div>
+        <div class="handwriting">Make yourself at home ♡</div>
+      </aside>
+
+      <section class="account-card">
+        <div id="authArea">
+          <div class="tabs">
+            <button class="tab active" id="loginTab" type="button">Log in</button>
+            <button class="tab" id="registerTab" type="button">Create account</button>
+          </div>
+
+          <div id="notice" class="message" role="status" aria-live="polite"></div>
+
+          <form id="loginForm">
+            <h2 class="form-title">Good to see you!</h2>
+            <p class="form-subtitle">Log in to access your cozy account.</p>
+
+            <div class="field">
+              <label for="loginEmail">Email address</label>
+              <input id="loginEmail" type="email" autocomplete="email" required maxlength="150" placeholder="you@example.com">
+            </div>
+
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
+            </div>
+
+            <button class="primary-btn" type="submit">Log in →</button>
+          </form>
+
+          <form id="registerForm" class="hidden">
+            <h2 class="form-title">Let's get cozy!</h2>
+            <p class="form-subtitle">Create your account in just a moment.</p>
+
+            <div class="field">
+              <label for="registerName">Full name</label>
+              <input id="registerName" type="text" autocomplete="name" required maxlength="80" placeholder="Your name">
+            </div>
+
+            <div class="field">
+              <label for="registerEmail">Email address</label>
+              <input id="registerEmail" type="email" autocomplete="email" required maxlength="150" placeholder="you@example.com">
+            </div>
+
+            <div class="field">
+              <label for="registerPassword">Create password</label>
+              <input id="registerPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters">
+            </div>
+
+            <div class="field">
+              <label for="confirmPassword">Confirm password</label>
+              <input id="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Type it again">
+            </div>
+
+            <button class="primary-btn" type="submit">Create my account ♡</button>
+          </form>
+
+          <p class="small-note">
+            Account storage in this first stage is only a local prototype.
+            Do not use a real or reused password. Server-side authentication
+            will be required before accepting real customer accounts.
+          </p>
+        </div>
+
+        <div id="profileArea" class="hidden">
+          <div class="profile-top">
+            <div class="avatar">🌷</div>
+            <div>
+              <h2 id="welcomeName">Hello!</h2>
+              <p>Your cozy account is ready.</p>
+            </div>
+          </div>
+
+          <div id="profileNotice" class="message" role="status" aria-live="polite"></div>
+
+          <form id="profileForm">
+            <div class="field">
+              <label for="profileName">Full name</label>
+              <input id="profileName" type="text" required maxlength="80" autocomplete="name">
+            </div>
+
+            <div class="field">
+              <label for="profileEmail">Email address</label>
+              <input id="profileEmail" type="email" disabled>
+            </div>
+
+            <div class="field">
+              <label for="profilePhone">Phone number (optional)</label>
+              <input id="profilePhone" type="tel" maxlength="25" autocomplete="tel" placeholder="Your phone number">
+            </div>
+
+            <div class="field">
+              <label for="profileAddress">Delivery address (optional)</label>
+              <input id="profileAddress" type="text" maxlength="250" autocomplete="street-address" placeholder="Your delivery address">
+            </div>
+
+            <button class="primary-btn" type="submit">Save my details</button>
+
+            <div class="profile-actions">
+              <a class="secondary-btn" href="shop.html" style="display:grid;place-items:center">Explore the shop</a>
+              <button class="secondary-btn" id="logoutBtn" type="button">Log out</button>
+            </div>
+          </form>
+
+          <p class="small-note">
+            Order history and order tracking will be connected in a later stage.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    cozy. — little things, better days. ♡
+  </footer>
+
+  <script>
+    "use strict";
+
+    // Prototype only. These browser records are NOT secure authentication.
+    const USERS_KEY = "cozy_customer_accounts_demo_v1";
+    const SESSION_KEY = "cozy_customer_session_demo_v1";
+
+    const $ = (id) => document.getElementById(id);
+
+    const authArea = $("authArea");
+    const profileArea = $("profileArea");
+    const loginForm = $("loginForm");
+    const registerForm = $("registerForm");
+    const loginTab = $("loginTab");
+    const registerTab = $("registerTab");
+    const notice = $("notice");
+    const profileNotice = $("profileNotice");
+
+    function readUsers() {
+      try {
+        const value = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+        return Array.isArray(value) ? value : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    }
+
+    function showMessage(element, message, type = "error") {
+      element.textContent = message;
+      element.className = "message show " + type;
+    }
+
+    function clearMessage(element) {
+      element.textContent = "";
+      element.className = "message";
+    }
+
+    function showLogin() {
+      loginForm.classList.remove("hidden");
+      registerForm.classList.add("hidden");
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+      clearMessage(notice);
+    }
+
+    function showRegister() {
+      registerForm.classList.remove("hidden");
+      loginForm.classList.add("hidden");
+      registerTab.classList.add("active");
+      loginTab.classList.remove("active");
+      clearMessage(notice);
+    }
+
+    // Hashing here is for a demo only, not a replacement for server-side auth.
+    async function hashPassword(password) {
+      if (!window.crypto || !window.crypto.subtle) {
+        throw new Error("Please open this page through localhost or HTTPS.");
+      }
+
+      const bytes = new TextEncoder().encode(password);
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+
+      return Array.from(new Uint8Array(digest))
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    function currentUser() {
+      const email = localStorage.getItem(SESSION_KEY);
+      if (!email) return null;
+
+      return readUsers().find(user => user.email === email) || null;
+    }
+
+    function renderAccount() {
+      const user = currentUser();
+
+      authArea.classList.toggle("hidden", Boolean(user));
+      profileArea.classList.toggle("hidden", !user);
+
+      if (!user) return;
+
+      $("welcomeName").textContent = "Hello, " + user.name + "!";
+      $("profileName").value = user.name || "";
+      $("profileEmail").value = user.email || "";
+      $("profilePhone").value = user.phone || "";
+      $("profileAddress").value = user.address || "";
+      clearMessage(profileNotice);
+    }
+
+    loginTab.addEventListener("click", showLogin);
+    registerTab.addEventListener("click", showRegister);
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage(notice);
+
+      const name = $("registerName").value.trim();
+      const email = $("registerEmail").value.trim().toLowerCase();
+      const password = $("registerPassword").value;
+      const confirm = $("confirmPassword").value;
+
+      if (name.length < 2) {
+        return showMessage(notice, "Please enter your full name.");
+      }
+
+      if (password.length < 8) {
+        return showMessage(notice, "Your password must have at least 8 characters.");
+      }
+
+      if (password !== confirm) {
+        return showMessage(notice, "The passwords do not match.");
+      }
+
+      const users = readUsers();
+
+      if (users.some(user => user.email === email)) {
+        return showMessage(notice, "An account with this email already exists. Please log in.");
+      }
+
+      try {
+        const passwordHash = await hashPassword(password);
+
+        users.push({
+          name,
+          email,
+          passwordHash,
+          phone: "",
+          address: "",
+          createdAt: new Date().toISOString()
+        });
+
+        saveUsers(users);
+        localStorage.setItem(SESSION_KEY, email);
+        registerForm.reset();
+        renderAccount();
+      } catch (error) {
+        showMessage(notice, error.message || "Could not create the demo account.");
+      }
+    });
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage(notice);
+
+      const email = $("loginEmail").value.trim().toLowerCase();
+      const password = $("loginPassword").value;
+
+      try {
+        const passwordHash = await hashPassword(password);
+        const user = readUsers().find(item =>
+          item.email === email && item.passwordHash === passwordHash
+        );
+
+        if (!user) {
+          return showMessage(notice, "Email or password is incorrect.");
+        }
+
+        localStorage.setItem(SESSION_KEY, email);
+        loginForm.reset();
+        renderAccount();
+      } catch (error) {
+        showMessage(notice, error.message || "Could not log in.");
+      }
+    });
+
+    $("profileForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const user = currentUser();
+      if (!user) return;
+
+      const users = readUsers();
+      const index = users.findIndex(item => item.email === user.email);
+      if (index < 0) return;
+
+      users[index].name = $("profileName").value.trim();
+      users[index].phone = $("profilePhone").value.trim();
+      users[index].address = $("profileAddress").value.trim();
+
+      saveUsers(users);
+      renderAccount();
+      showMessage(profileNotice, "Your details have been saved on this device ♡", "success");
+    });
+
+    $("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem(SESSION_KEY);
+      showLogin();
+      renderAccount();
+    });
+
+    renderAccount();
+  </script>
+</body>
+</html>
